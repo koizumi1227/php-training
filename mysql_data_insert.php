@@ -14,7 +14,7 @@ $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 date_default_timezone_set('Asia/Tokyo');
 
 
-// nameにaaa 、 dateに登録した日時のデータをそれぞれ入れる
+// $nameにaaa 、 $created_atに登録した日時のデータをそれぞれ入れる
 $name = 'aaa';
 $created_at = date('Y-m-d H:i:s');
 
