@@ -13,10 +13,12 @@ try {
 $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 date_default_timezone_set('Asia/Tokyo');
 
+
+// nameにaaa 、 dateに登録した日時のデータをそれぞれ入れる
 $name = 'aaa';
 $dates = date('Y-m-d H:i:s');
 
-$sql = 'INSERT INTO testtable(name,dates) VALUES(:name,:dates);';
+$sql = 'INSERT INTO testtables(name,dates) VALUES(:name,:dates);';
 $pre = $dbh->prepare($sql);
 
 $pre->bindValue(':name', $name PDO::PARAM_STR);
