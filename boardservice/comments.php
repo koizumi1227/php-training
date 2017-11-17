@@ -1,6 +1,6 @@
 <?php
 // comment_regi.phpからコメントをDBへ保存
-if ($_POST[action] == cancel) {
+if ($_POST['action'] == 'cancel') {
   header('Location: board_service.php');
 exit;
 }
@@ -13,9 +13,9 @@ try{
 
 
     // コメント内容
-    $name = $_POST[name];
-    $title = $_POST[title];
-    $text = $_POST[text];
+    $name = $_POST['name'];
+    $title = $_POST['title'];
+    $text = $_POST['text'];
     $created_at = date('Y-m-d H:i:s');
 
     $sql = 'INSERT INTO comments(name,title,created_at,text) VALUES(:name,:title,:created_at,:text);';
