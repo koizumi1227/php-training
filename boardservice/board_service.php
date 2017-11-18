@@ -1,7 +1,6 @@
 <?php
-
+  require_once 'function.php';
   require_once 'db_connect.php';
-
   $dbh = db_connect();
   $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
   $sql = 'SELECT * FROM comments;';
@@ -33,24 +32,25 @@
       <?php
         while($data = $pre->fetch(PDO::FETCH_ASSOC)){
           // var_dump($data);
+          // e関数(htmlspecialchars)
         echo "<tr>";
         echo "<td>";
-        echo "$data[id]";
+        echo e($data['id']);
         echo "</td>";
         echo "<td>";
-        echo "$data[name]";
+        echo e($data['name']);
         echo "</td>";
         echo "<td>";
-        echo "$data[created_at]";
+        echo e($data['created_at']);
         echo "</td>";
         echo "<td>";
-        echo "$data[updated_at]";
+        echo e($data['updated_at']);
         echo "</td>";
         echo "<td>";
-        echo "$data[title]";
+        echo e($data['title']);
         echo "</td>";
         echo "<td>";
-        echo "$data[text]";
+        echo e($data['text']);
         echo "</td>";
         echo "</tr>";
       }?>
