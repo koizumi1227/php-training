@@ -3,7 +3,7 @@
   require_once 'db_connect.php';
   $dbh = db_connect();
   $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-  $sql = 'SELECT * FROM comments;';
+  $sql = 'SELECT * FROM comments';
   $pre = $dbh -> prepare($sql);
   $r = $pre->execute();
   if (false === $r) {
@@ -33,27 +33,17 @@
         while($data = $pre->fetch(PDO::FETCH_ASSOC)){
           // var_dump($data);
           // e関数(htmlspecialchars)
-        echo "<tr>";
-        echo "<td>";
-        echo e($data['id']);
-        echo "</td>";
-        echo "<td>";
-        echo e($data['name']);
-        echo "</td>";
-        echo "<td>";
-        echo e($data['created_at']);
-        echo "</td>";
-        echo "<td>";
-        echo e($data['updated_at']);
-        echo "</td>";
-        echo "<td>";
-        echo e($data['title']);
-        echo "</td>";
-        echo "<td>";
-        echo e($data['text']);
-        echo "</td>";
-        echo "</tr>";
-      }?>
+        ?>
+        <tr>
+          <td><?php echo e($data['id']) ?></td>
+          <td><?php echo e($data['name']) ?></td>
+          <td><?php echo e($data['created_at']) ?></td>
+          <td><?php echo e($data['updated_at']) ?></td>
+          <td><?php echo e($data['title']) ?></td>
+          <td><?php echo e($data['text']) ?></td>
+        </tr>
+
+      <?php } ?>
 
     </table>
 
