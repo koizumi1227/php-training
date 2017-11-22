@@ -20,6 +20,7 @@
     <title>コメント一覧</title>
   </head>
   <body>
+    <p>コメント内容を変更する場合はIDを、削除したい場合は削除をクリック</p>
     <table border="1">
       <tr>
         <th>ID</th>
@@ -32,21 +33,24 @@
       <?php
         while($data = $pre->fetch(PDO::FETCH_ASSOC)){
           // var_dump($data);
-          // e関数(htmlspecialchars)
+          // h関数(htmlspecialchars)
         ?>
         <tr>
-          <td><?php echo e($data['id']) ?></td>
-          <td><?php echo e($data['name']) ?></td>
-          <td><?php echo e($data['created_at']) ?></td>
-          <td><?php echo e($data['updated_at']) ?></td>
-          <td><?php echo e($data['title']) ?></td>
-          <td><?php echo e($data['text']) ?></td>
+          <td>
+            <?php echo "<a href=detail.php?id={$data['id']}>".$data['id']."</a>";?>
+          </td>
+          <td><?php echo h($data['name']) ?></td>
+          <td><?php echo h($data['created_at']) ?></td>
+          <td><?php echo h($data['updated_at']) ?></td>
+          <td><?php echo h($data['title']) ?></td>
+          <td><?php echo h($data['text']) ?></td>
+          <td>
+            <?php echo "<a href=delete_regi.php?id={$data['id']}>削除</a>";?>
+          </td>
         </tr>
-
       <?php } ?>
 
     </table>
-
 
   </body>
 </html>
