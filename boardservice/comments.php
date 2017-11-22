@@ -18,7 +18,7 @@ try{
     $text = $_POST['text'];
     $created_at = date('Y-m-d H:i:s');
 
-    $sql = 'INSERT INTO comments(name,title,created_at,text) VALUES(:name,:title,:created_at,:text);';
+    $sql = 'INSERT INTO comments(name,title,created_at,text) VALUES(:name,:title,:created_at,:text)';
     $pre = $dbh->prepare($sql);
 
     $pre->bindValue(':name', $name, PDO::PARAM_STR);
@@ -35,14 +35,13 @@ try{
 
 ?>
 <!DOCTYPE html>
-<html>
-  <head lang="ja">
+<html lang="ja">
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="refresh" content="1;URL=board_service.php">
     <title>コメント完了</title>
-    <p>コメント完了</p>
   </head>
   <body>
-
+    <p>コメント完了</p>
   </body>
 </html>
