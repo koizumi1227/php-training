@@ -4,9 +4,14 @@
   $dbh = db_connect();
   $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
-  $sql = 'SELECT * FROM comments';
+  // board_service.phpから名前選択からidを取得。
+  $user_id = $_GET['id'];
+  var_dump($user_id);
+  $sql = 'SELECT * FROM users INNER JOIN comments ON comments.user_id = users.id WHERE user_id = :user_id';
   $pre = $dbh -> prepare($sql);
+  $pre->bindValue(':user_id', $user_id);
   $r = $pre->execute();
+
   if (false === $r) {
       var_dump($pre->errorInfo());
       return;
@@ -18,9 +23,10 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8">
-    <title>コメント一覧</title>
+    <title>ユーザーコメント一覧</title>
   </head>
   <body>
+  <table border="1">
     <tr>
       <th>ID</th>
       <th>名前</th>
@@ -31,7 +37,9 @@
     </tr>
     <?php
       while($data = $pre->fetch(PDO::FETCH_ASSOC)){
+        // echo"<pre>";
         // var_dump($data);
+        // echo"<pre>";
         // h関数(htmlspecialchars)
       ?>
       <tr>
