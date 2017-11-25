@@ -32,6 +32,7 @@
       </tr>
       <?php
         while($data = $pre->fetch(PDO::FETCH_ASSOC)){
+          // echo"<pre>";
           // var_dump($data);
           // h関数(htmlspecialchars)
         ?>
@@ -39,7 +40,9 @@
           <td>
             <?php echo "<a href=detail.php?id={$data['id']}>".$data['id']."</a>";?>
           </td>
-          <td><?php echo h($data['name']) ?></td>
+          <td>
+            <?php echo "<a href=user_comment_list.php?id={$data['user_id']}>".h($data['name'])."</a>"; ?>
+          </td>
           <td><?php echo h($data['created_at']) ?></td>
           <td><?php echo h($data['updated_at']) ?></td>
           <td><?php echo h($data['title']) ?></td>
