@@ -1,9 +1,34 @@
 <?php
-  // 名前未入力の場合「名無しに」変更
-  if($_POST['name'] == ''){
-    $_POST['name'] = '名無し';
+  require_once 'function.php';
+  require_once 'db_connect.php';
+
+  // ユーザー名一致判別
+  try{
+      $dbh = db_connect();
+      $dbh -> setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
+      $names = $_POST['name'];
+      $sql = 'SELECT * FROM users WHERE user_name = :user_name';
+      $pre = $dbh -> prepare($sql);
+
+      $pre->bindValue(':user_name', $names, PDO::PARAM_STR);
+      $r = $pre->execute();
+      // user_nameに該当するものがあるかを数える。なければ０。
+      $count = $pre->rowCount();
+
+      if($count == 0){
+        echo "該当するユーザー名がありません<br>";
+        echo "<a href=user_regi_form.php>こちら</a>からユーザー登録をしてください<br>";
+        exit;
+      }
+
+  } catch (PDOException $e) {
+      echo "エラーが発生。再度始めからやり直してください。 (" , $e->getMessage() , ")";
+      return ;
+
   }
- ?>
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
   <head>
