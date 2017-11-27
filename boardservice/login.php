@@ -10,15 +10,15 @@ $errorMessage = "";
 // ログインボタンが押された場合
 if (isset($_POST["login"])) {
     // 1. ユーザIDの入力チェック
-    if (empty($_POST["name"])) {
-        $errorMessage = 'ユーザーIDが未入力です。';
+    if (empty($_POST["email"])) {
+        $errorMessage = 'メールアドレスが未入力です。';
     } else if (empty($_POST["password"])) {
         $errorMessage = 'パスワードが未入力です。';
     }
 
-    if (!empty($_POST["name"]) && !empty($_POST["password"])) {
+    if (!empty($_POST["email"]) && !empty($_POST["password"])) {
         // 入力したユーザIDを格納
-        $userid = $_POST["name"];
+        $email = $_POST["email"];
         $password = $_POST["password"];
         $token = $_POST["token"];
         // 認証
@@ -26,9 +26,9 @@ if (isset($_POST["login"])) {
             $dbh = db_connect();
             $dbh -> setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
-            $sql = 'SELECT * FROM users WHERE name =:name';
+            $sql = 'SELECT * FROM users WHERE email =:email';
             $pre = $dbh->prepare($sql);
-            $pre->bindValue(':name', $userid, PDO::PARAM_STR);
+            $pre->bindValue(':email', $email, PDO::PARAM_STR);
 
             $pre->execute();
 
@@ -37,8 +37,8 @@ if (isset($_POST["login"])) {
                     session_regenerate_id(true);
                     $_SESSION['name'] = $row['name'];
                     $_SESSION['id'] = $row['id'];
-                    var_dump($row);
-                    var_dump($_SESSION);
+                    // var_dump($row);
+                    // var_dump($_SESSION);
 
                     // header("Location: board_service.php"); //コメント一覧へ移動
                     exit();  // 処理終了
@@ -69,7 +69,7 @@ if (isset($_POST["login"])) {
       <form id="loginForm" name="loginForm" action="" method="POST">
               ログインフォーム
               <div><font color="#ff0000"><?php echo h($errorMessage, ENT_QUOTES); ?></font></div>
-              <label for="name">ユーザーID : </label><input type="text" id="name" name="name" placeholder="ユーザー名を入力" value="">
+              <label for="email">メールアドレス : </label><input type="text" id="email" name="email" placeholder="メールアドレスを入力" value="">
               <br>
               <label for="password">パスワード : </label><input type="password" id="password" name="password" value="" placeholder="パスワードを入力">
               <br>
