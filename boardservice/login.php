@@ -40,7 +40,7 @@ if (isset($_POST["login"])) {
                     // var_dump($row);
                     // var_dump($_SESSION);
 
-                    // header("Location: board_service.php"); //コメント一覧へ移動
+                    header("Location: board_service.php"); //コメント一覧へ移動
                     exit();  // 処理終了
                 } else {
                     // 認証失敗
