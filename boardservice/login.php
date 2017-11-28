@@ -24,7 +24,6 @@ if (isset($_POST["login"])) {
         // 認証
         try {
             $dbh = db_connect();
-            $dbh -> setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
             $sql = 'SELECT * FROM users WHERE email =:email';
             $pre = $dbh->prepare($sql);

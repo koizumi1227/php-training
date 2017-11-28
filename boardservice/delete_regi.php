@@ -4,8 +4,6 @@
   require_once 'db_connect.php';
 try{
   $dbh = db_connect();
-  $dbh -> setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-  date_default_timezone_set('Asia/Tokyo');
 
   $sql = 'SELECT * FROM comments WHERE id = :id';
   $pre = $dbh->prepare($sql);

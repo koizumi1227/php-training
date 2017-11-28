@@ -6,9 +6,6 @@ exit;
 require_once 'db_connect.php';
 try{
     $dbh = db_connect();
-    $dbh -> setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    date_default_timezone_set('Asia/Tokyo');
-
 
     // 該当するIDからコメント削除
     $id = $_POST['id'];

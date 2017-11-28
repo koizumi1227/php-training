@@ -2,8 +2,6 @@
   require_once 'function.php';
   require_once 'db_connect.php';
   $dbh = db_connect();
-  $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-
   // board_service.phpから名前選択からidを取得。
   $user_id = $_GET['id'];
   var_dump($user_id);
