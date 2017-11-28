@@ -13,7 +13,7 @@ try{
     // 登録内容
     $name = $_POST['name'];
     $mail = $_POST['mail'];
-    $password = $_POST['password'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     // var_dump($_POST);
 
     // メールアドレスが存在するかのカウント。存在しなければ値が0。
