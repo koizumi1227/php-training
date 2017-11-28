@@ -2,7 +2,12 @@
 
 require_once 'db_connect.php';
 require_once 'function.php';
-@session_start();
+session_start();
+if (isset($_SESSION['name'])) {
+  echo h($_SESSION['name'])."でログインされています<br>";
+  echo "<a href=board_service.php>コメント一覧へ戻る</a>";
+  exit;
+}
 
 // エラーメッセージの初期化
 $errorMessage = "";
