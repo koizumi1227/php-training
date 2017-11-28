@@ -1,29 +1,48 @@
 <?php
-// user_regi.phpからDBへ保存
 if ($_POST['action'] == 'cancel') {
   header('Location: board_service.php');
 exit;
 }
-
+// user_regi.phpからDBへ保存
 require_once 'db_connect.php';
+require_once 'function.php';
+
 try{
     $dbh = db_connect();
-    $dbh -> setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    date_default_timezone_set('Asia/Tokyo');
 
     // 登録内容
     $name = $_POST['name'];
-    // $mail = $_POST['mail'];
-    // $password = $_POST['password'];
+    $mail = $_POST['mail'];
+    $password = $_POST['password'];
+    // var_dump($_POST);
 
-    $sql = 'INSERT INTO users(user_name) VALUES(:name)';
-    $pre = $dbh->prepare($sql);
+    // メールアドレスが存在するかのカウント。存在しなければ値が0。
+    $sql = "SELECT count(*) FROM users WHERE email = :email";
 
-    $pre->bindValue(':name', $name, PDO::PARAM_STR);
-    // $pre->bindValue(':mail', $mail, PDO::PARAM_STR);
-    // $pre->bindValue(':password', $password, PDO::PARAM_STR);
+    $pre = $dbh -> prepare($sql);
+    $pre->bindValue(':email', $mail, PDO::PARAM_STR);
 
     $r = $pre->execute();
+    $n = $pre->fetchColumn();
+    // var_dump($n);
+
+    // カウント０だった場合にDBへ保存。そうじゃなければ再度始めから登録へ。
+    if($n == 0){
+      $sql = 'INSERT INTO users(name,email,password)
+              VALUES(:name,:email,:password)';
+      $pre = $dbh -> prepare($sql);
+      $pre->bindValue(':name', $name, PDO::PARAM_STR);
+      $pre->bindValue(':email', $mail, PDO::PARAM_STR);
+      $pre->bindValue(':password', $password, PDO::PARAM_STR);
+      $r = $pre->execute();
+    } else{
+      echo "すでに登録されているメールアドレスです。<br>";
+      echo "<a href='user_regi_form.php'>こちら</a>から再度登録をお願いします。";
+      return;
+    }
+
+
+
 } catch (PDOException $e) {
     echo "登録に失敗しました。再度始めからやり直してください。 (" , $e->getMessage() , ")";
     return ;
