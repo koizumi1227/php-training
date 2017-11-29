@@ -1,22 +1,31 @@
 <?php
-// 選択されたIDから詳細を表示
-  $id = $_GET['id'];
   require_once 'function.php';
   require_once 'db_connect.php';
-try{
-  $dbh = db_connect();
-  date_default_timezone_set('Asia/Tokyo');
+  session_start();
+  // ログイン後ならsession[name]有
+  if(!isset($_SESSION['name'])){
+    echo "<a href='login.php'>ログイン</a>あるいは
+          <a href='user_regi_form.php'>新規登録</a>してください。";
+    echo "<a href=board_service.php>コメント一覧へ戻る</a>";
+    exit;
+  }
 
-  $sql = 'SELECT * FROM comments WHERE id = :id';
-  $pre = $dbh->prepare($sql);
-  $pre->bindValue(':id', $id);
-  $r = $pre->execute();
-} catch (PDOException $e) {
-  echo "エラーが発生しました。最初から再度IDを選択。 (" , $e->getMessage() , ")";
-  return ;
+  // 選択されたIDから詳細を表示
+    $id = $_GET['id'];
 
-}
- ?>
+  try{
+    $dbh = db_connect();
+    date_default_timezone_set('Asia/Tokyo');
+
+    $sql = 'SELECT * FROM comments WHERE id = :id';
+    $pre = $dbh->prepare($sql);
+    $pre->bindValue(':id', $id);
+    $r = $pre->execute();
+  } catch (PDOException $e) {
+    echo "エラーが発生しました。最初から再度IDを選択。 (" , $e->getMessage() , ")";
+    return ;
+  }
+?>
 
 <!DOCTYPE html>
 <html lang="ja">
