@@ -1,19 +1,32 @@
 <?php
   require_once 'function.php';
   require_once 'db_connect.php';
-  $dbh = db_connect();
-  // board_service.phpから名前選択からidを取得。
-  $user_id = $_GET['id'];
-  var_dump($user_id);
-  $sql = 'SELECT * FROM users INNER JOIN comments ON comments.user_id = users.id WHERE user_id = :user_id';
-  $pre = $dbh -> prepare($sql);
-  $pre->bindValue(':user_id', $user_id);
-  $r = $pre->execute();
-
-  if (false === $r) {
-      var_dump($pre->errorInfo());
-      return;
+  session_start();
+  // ログイン後ならsession[name]有
+  if(!isset($_SESSION['name'])){
+    echo "<a href='login.php'>ログイン</a>あるいは
+          <a href='user_regi_form.php'>新規登録</a>してください。";
+    echo "<a href=board_service.php>コメント一覧へ戻る</a>";
+    exit;
   }
+
+  try {
+    // session[name]からDBアクセス
+    // 該当するユーザーIDのコメント表示
+    $user_id = $_SESSION['id'];
+
+    $dbh = db_connect();
+    $sql = 'SELECT comments.*, users.name FROM users INNER JOIN comments ON comments.user_id = users.id WHERE user_id = :user_id';
+    $pre = $dbh -> prepare($sql);
+    $pre->bindValue(':user_id', $user_id);
+    $r = $pre->execute();
+
+  } catch (PDOException $e) {
+    echo "エラーが発生。再度始めからやり直してください。 (" , $e->getMessage() , ")";
+    return ;
+  }
+
+
   ?>
 
 
