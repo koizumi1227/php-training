@@ -1,7 +1,16 @@
 <?php
+  session_start();
+  if(!isset($_SESSION['name'])){
+    echo "<a href='login.php'>ログイン</a>あるいは
+          <a href='user_regi_form.php'>新規登録</a>してください。";
+    echo "<a href=board_service.php>コメント一覧へ戻る</a>";
+    exit;
+  }
+
   $id = $_GET['id'];
   require_once 'function.php';
   require_once 'db_connect.php';
+
 try{
   $dbh = db_connect();
 
