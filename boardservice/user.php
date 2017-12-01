@@ -1,9 +1,9 @@
 <?php
 if ($_POST['action'] == 'cancel') {
-  header('Location: board_service.php');
+  header('Location: index.php');
 exit;
 }
-// user_regi.phpからDBへ保存
+// user_confirm.phpからDBへ保存
 require_once 'db_connect.php';
 require_once 'function.php';
 
@@ -53,7 +53,7 @@ try{
 <html lang="ja">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="refresh" content="1;URL=board_service.php">
+    <meta http-equiv="refresh" content="1;URL=index.php">
     <title>登録完了</title>
   </head>
   <body>

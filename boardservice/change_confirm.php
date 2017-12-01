@@ -1,6 +1,6 @@
 <?php
 if ($_POST['action'] == 'cancel') {
-  header('Location: board_service.php');
+  header('Location: index.php');
 exit;
 }
  ?>
@@ -12,7 +12,7 @@ exit;
   </head>
   <body>
   <?php require_once 'function.php'; ?>
-  <form action="change.php" method="post">
+  <form action="update.php" method="post">
     <p>タイトル : <?php echo h($_POST['title'])?></p>
     <p>コメント内容 : <?php echo h($_POST['text'])?></p>
     <input type="hidden" name="title" value="<?php echo h($_POST['title'])?>">

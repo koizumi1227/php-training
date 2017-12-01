@@ -1,6 +1,6 @@
 <?php
 if ($_POST['action'] == 'cancel') {
-  header('Location: board_service.php');
+  header('Location: index.php');
 exit;
 }
 require_once 'db_connect.php';
@@ -26,7 +26,7 @@ try{
 <html lang="ja">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="refresh" content="1;URL=board_service.php">
+    <meta http-equiv="refresh" content="1;URL=index.php">
     <title>コメント削除完了</title>
   </head>
   <body>
