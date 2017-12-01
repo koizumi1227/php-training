@@ -7,7 +7,8 @@
   try {
 
     $dbh = db_connect();
-    $sql = 'SELECT * FROM comments';
+    $sql = 'SELECT comments.*, users.name FROM users INNER JOIN comments ON comments.user_id = users.id';
+    // $sql = 'SELECT * FROM comments';
     $pre = $dbh -> prepare($sql);
     $r = $pre->execute();
 
@@ -23,13 +24,8 @@
   <head>
     <meta charset="utf-8">
     <title>コメント一覧</title>
+    <link rel="stylesheet" type="text/css" href="./css/index.css">
 
-    <style>
-    .form_conf form {
-        display: inline-block;
-        margin: 0 10px;
-    }
-    </style>
   </head>
   <body>
     <h1>コメント一覧</h1>
@@ -47,6 +43,7 @@
           // echo"<pre>";
           // var_dump($data);
           // h関数(htmlspecialchars)
+
         ?>
         <tr>
           <td><?php echo h($data['id'])?></td>
@@ -60,18 +57,10 @@
 
     </table>
     <div class="form_conf">
-      <form action="login.php">
-        <p><input type="submit" value="ログイン"></p>
-      </form>
-      <form action="user_regi_form.php">
-        <p><input type="submit" value="新規登録"></p>
-      </form>
-      <form action="comment_form.html">
-        <p><input type="submit" value="コメント投稿"></p>
-      </form>
-      <form action="user_comment_list.php">
-        <p><input type="submit" value="自分のコメント表示"></p>
-      </form>
+      <a href="login.php">ログイン</a>
+      <a href="user_regi_form.php">新規登録</a>
+      <a href="comment_form.php">コメント投稿</a>
+      <a href="user_comment_list.php">自分のコメント表示</a>
     </div>
 
   </body>
