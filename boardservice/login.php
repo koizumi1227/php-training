@@ -3,11 +3,10 @@
 require_once 'db_connect.php';
 require_once 'function.php';
 session_start();
-if (isset($_SESSION['name'])) {
-  echo h($_SESSION['name'])."でログインされています<br>";
-  echo "<a href=board_service.php>コメント一覧へ戻る</a>";
-  exit;
-}
+
+// ログイン時のユーザー名表示
+logined_session();
+
 
 // エラーメッセージの初期化
 $errorMessage = "";
@@ -44,7 +43,7 @@ if (isset($_POST["login"])) {
                     // var_dump($row);
                     // var_dump($_SESSION);
 
-                    header("Location: board_service.php"); //コメント一覧へ移動
+                    header("Location: index.php"); //コメント一覧へ移動
                     exit();  // 処理終了
                 } else {
                     // 認証失敗

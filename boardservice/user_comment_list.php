@@ -3,12 +3,9 @@
   require_once 'db_connect.php';
   session_start();
   // ログイン後ならsession[name]有
-  if(!isset($_SESSION['name'])){
-    echo "<a href='login.php'>ログイン</a>あるいは
-          <a href='user_regi_form.php'>新規登録</a>してください。";
-    echo "<a href=board_service.php>コメント一覧へ戻る</a>";
-    exit;
-  }
+
+    //未ログイン時にログイン、新規登録、コメント一覧へ誘導
+  unlogined_session();
 
   try {
     // session[name]からDBアクセス

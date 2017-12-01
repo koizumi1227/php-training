@@ -2,11 +2,9 @@
   require_once 'function.php';
 
   session_start();
-  if (isset($_SESSION['name'])) {
-    echo h($_SESSION['name'])."でログインされています<br>";
-    echo "<a href=board_service.php>コメント一覧へ戻る</a>";
-    exit;
-  }
+
+  // ログイン時のユーザー名表示
+  logined_session();
 
 ?>
 
@@ -18,7 +16,7 @@
   </head>
   <body>
     <h1>ユーザー登録</h1>
-    <form action="user_regi.php" method="post">
+    <form action="user_confirm.php" method="post">
       <p>名前:<input type="name" name="name" size="30" placeholder="名前"></p>
       <p>メールアドレス:<input type="text" name="mail" size="30" placeholder="example@example.com"></p>
       <p>パスワード:<input type="password" name="password" size="10" placeholder="パスワード"></p>
