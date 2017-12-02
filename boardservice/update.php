@@ -4,32 +4,47 @@ if ($_POST['action'] == 'cancel') {
   header('Location: index.php');
 exit;
 }
+
 require_once 'db_connect.php';
-try{
-    $dbh = db_connect();
-    date_default_timezone_set('Asia/Tokyo');
+require_once 'function.php';
+session_start();
+unlogined_session();
 
-    // コメント変更内容
-    $id = $_POST['id'];
-    $title = $_POST['title'];
-    $text = $_POST['text'];
-    $updated_at = date('Y-m-d H:i:s');
+// var_dump($_SESSION['id']);
+// echo"<br>";
+// var_dump($_POST['user_id']);
 
-    $sql = 'UPDATE comments SET title=:title, updated_at=:updated_at, text=:text WHERE id = :id';
-    $pre = $dbh->prepare($sql);
+// ログインされていれば　$_SESSION['id']とusers.id　が同じになる
+// change.confirm.phpから異なるユーザーがアクセスしたときにcomments.user_id と users.idが一致するか判別
+if($_SESSION['id'] == $_POST['user_id'] ){
+    try{
+        $dbh = db_connect();
+        date_default_timezone_set('Asia/Tokyo');
 
-    $pre->bindValue(':id', $id);
-    $pre->bindValue(':title', $title, PDO::PARAM_STR);
-    $pre->bindValue(':text', $text, PDO::PARAM_STR);
-    $pre->bindValue(':updated_at', $updated_at, PDO::PARAM_INT);
+        // コメント変更内容
+        $id = $_POST['id'];
+        $title = $_POST['title'];
+        $text = $_POST['text'];
+        $updated_at = date('Y-m-d H:i:s');
 
-    $r = $pre->execute();
-} catch (PDOException $e) {
-    echo "エラーが発生しました。内容を変更に失敗。 (" , $e->getMessage() , ")";
-    return ;
+        $sql = 'UPDATE comments SET title=:title, updated_at=:updated_at, text=:text WHERE id = :id';
+        $pre = $dbh->prepare($sql);
 
-}
+        $pre->bindValue(':id', $id);
+        $pre->bindValue(':title', $title, PDO::PARAM_STR);
+        $pre->bindValue(':text', $text, PDO::PARAM_STR);
+        $pre->bindValue(':updated_at', $updated_at, PDO::PARAM_INT);
 
+        $r = $pre->execute();
+    } catch (PDOException $e) {
+        echo "エラーが発生しました。内容を変更に失敗。 (" , $e->getMessage() , ")";
+        return ;
+
+    }
+ } else {
+   header('Location: index.php');
+   exit;
+ }
 ?>
 <!DOCTYPE html>
 <html lang="ja">
