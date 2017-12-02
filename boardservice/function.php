@@ -14,13 +14,10 @@
       return $token === generate_token();
   }
 
-  //未ログイン時にログイン、新規登録、コメント一覧へ誘導
+  //未ログイン時に、index.phpへ
   function unlogined_session(){
     if(!isset($_SESSION['name'])){
-      echo "<a href='login.php'>ログイン</a>あるいは
-            <a href='user_regi_form.php'>新規登録</a>してください。";
-      echo "<a href=index.php>コメント一覧へ戻る</a>";
-      exit;
+      header('Location: index.php');
     }
   }
 

@@ -1,6 +1,6 @@
 <?php
   require_once 'db_connect.php';
-
+  require_once  'function.php';
   // comment_regi.phpからコメントをDBへ保存
   if ($_POST['action'] == 'cancel') {
     header('Location: index.php');
@@ -8,6 +8,7 @@
   }
 
   session_start();
+  unlogined_session();
 
   try{
       $dbh = db_connect();

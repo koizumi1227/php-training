@@ -1,6 +1,7 @@
 <?php
   require_once 'function.php';
   session_start();
+  unlogined_session();
 ?>
 
 <!DOCTYPE html>
