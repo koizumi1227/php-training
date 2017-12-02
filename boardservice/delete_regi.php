@@ -30,7 +30,6 @@ try{
   <body>
     <?php $data = $pre->fetch(PDO::FETCH_ASSOC);?>
     <p>ID : <?php echo h($data['id']) ?></p>
-    <p>名前 : <?php echo h($data['name']) ?></p>
     <p>タイトル : <?php echo h($data['title']) ?></p>
     <p>コメント内容:</p>
     <pre>
@@ -40,6 +39,7 @@ try{
 
     <form action="delete.php" method="POST">
       <input type="hidden" name="id" value="<?php echo h($data['id'])?>">
+      <input type="hidden" name="user_id" value="<?php echo h($data['user_id'])?>">
       <button type="submit" name="action" value="accept">削除</button>
       <button type="submit" name="action" value="cancel">キャンセル</button>
     </form>
