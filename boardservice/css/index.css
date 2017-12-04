@@ -1,6 +1,6 @@
-a{
-  /*display:block;*/
-  width:150px;
+.form_conf > a{
+  display:block;
+  width:300px;
   padding-top:5px;
   padding-bottom:5px;
   margin-top: 15px;
