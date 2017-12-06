@@ -18,6 +18,16 @@ try {
     return ;
 }
 
+// スレッド名一覧表示を$lineへ
+while($data = $pre->fetch(PDO::FETCH_ASSOC)){
+  $line .= "<tr>";
+  $line .= "<td>"."<a href='thread_comment.php?id={$data["id"]}'>".h($data['title'])."</a>"."</td>";
+  $line .= "<td>".h($data['created_at'])."</td>";
+  $line .= "</tr>";
+}
+
+
+
   ?>
 
 <!DOCTYPE html>
@@ -34,19 +44,8 @@ try {
         <th>スレッド名</th>
         <th>作成日時</th>
       </tr>
-        <?php
-          while($data = $pre->fetch(PDO::FETCH_ASSOC)){
-          // echo"<pre>";
-          // var_dump($data);
-        ?>
-          <tr>
-            <td><?php echo "<a href='thread_comment.php?id={$data["id"]}&title={$data["title"]}'>".h($data['title'])."</a>"?>
-            </td>
-            <td><?php echo h($data['created_at']) ?></td>
-          </tr>
-
-        <?php
-          } ?>
+      <!-- スレッド名一覧表示 -->
+      <?php echo $line ?>
     </table>
     <div class="form_conf">
       <a href="login.php">ログイン</a>
