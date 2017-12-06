@@ -8,17 +8,45 @@
   try {
 
     $thread_id = $_GET['id'];
-    // $title = $_GET['title'];
     // var_dump($thread_id);
     $dbh = db_connect();
-    $sql = 'SELECT comments.*, users.name FROM users INNER JOIN comments ON comments.user_id = users.id WHERE thread_id = :thread_id';
+    $sql = 'SELECT comments.*, users.name, threads.title AS thread_title
+            FROM comments
+            JOIN users
+            ON comments.user_id  = users.id
+            JOIN threads
+            ON comments.thread_id = threads.id
+            WHERE thread_id = :thread_id';
     $pre = $dbh -> prepare($sql);
     $pre->bindValue(':thread_id', $thread_id);
     $r = $pre->execute();
+
+
+    // スレッド内のコメント一覧
+      while($data = $pre->fetch(PDO::FETCH_ASSOC)){
+        $line .= "<tr>";
+        $line .= "<td>".h($data['id'])."</td>";
+        $line .= "<td>".h($data['name'])."</td>";
+        $line .= "<td>".h($data['created_at'])."</td>";
+        $line .= "<td>".h($data['updated_at'])."</td>";
+        $line .= "<td>".h($data['title'])."</td>";
+        $line .= "<td>".h($data['text'])."</td>";
+        $line .= "</tr>";
+      }
+
+      // スレッドタイトル取得
+        $pre->execute();
+        $thread = $pre->fetch(PDO::FETCH_ASSOC);
+        $thread_title = $thread['thread_title'];
+        // var_dump($thread_title);
+
   } catch (PDOException $e) {
       echo "エラーが発生。再度始めからやり直してください。 (" , $e->getMessage() , ")";
       return ;
   }
+
+
+
 
  ?>
 
@@ -30,7 +58,7 @@
     <a href="comment_history.php">コメント履歴</a>
   </head>
   <body>
-    <h1><?php echo h($_GET['title']) ?></h1>
+    <h1><?php echo h($thread_title) ?></h1>
     <table border="1">
       <tr>
         <th>ID</th>
@@ -40,24 +68,7 @@
         <th>タイトル</th>
         <th>コメント内容</th>
       </tr>
-      <?php
-        while($data = $pre->fetch(PDO::FETCH_ASSOC)){
-          // echo"<pre>";
-          // var_dump($data);
-          // h関数(htmlspecialchars)
-
-        ?>
-        <tr>
-          <td><?php echo h($data['id'])?></td>
-          <td><?php echo h($data['name']) ?></td>
-          <td><?php echo h($data['created_at']) ?></td>
-          <td><?php echo h($data['updated_at']) ?></td>
-          <td><?php echo h($data['title']) ?></td>
-          <td><?php echo h($data['text']) ?></td>
-        </tr>
-      <?php } ?>
-
+        <?php echo $line ?>
     </table>
-
   </body>
 </html>
