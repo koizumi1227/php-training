@@ -9,19 +9,17 @@ try {
   // session[name]からDBアクセス
   // 該当するユーザーIDのコメント表示
   $user_id = $_SESSION['id'];
-  $now_time = date("Y-m-d H:i:s" , strtotime('-1week'));
-
+  $one_week_ago = date("Y-m-d H:i:s" , strtotime('-1week'));
+  var_dump($_SESSION);
   $dbh = db_connect();
-  $sql = 'SELECT comments.*, users.name
-          FROM users
-          INNER JOIN comments
-          ON comments.user_id = users.id
+  $sql = 'SELECT *
+          FROM comments
           WHERE user_id = :user_id
           AND (comments.updated_at > :uptimes OR comments.created_at > :cretimes)
           ';
   $pre = $dbh -> prepare($sql);
-  $pre->bindvalue(':uptimes', $now_time);
-  $pre->bindvalue(':cretimes', $now_time);
+  $pre->bindvalue(':uptimes', $one_week_ago);
+  $pre->bindvalue(':cretimes', $one_week_ago);
   $pre->bindValue(':user_id', $user_id);
   $r = $pre->execute();
 
@@ -59,7 +57,7 @@ try {
           <td>
             <?php echo "<a href=detail.php?id={$data['id']}>".$data['id']."</a>";?>
           </td>
-          <td><?php echo h($data['name']) ?></td>
+          <td><?php echo h($_SESSION['name']) ?></td>
           <td><?php echo h($data['created_at']) ?></td>
           <td><?php echo h($data['updated_at']) ?></td>
           <td><?php echo h($data['title']) ?></td>
