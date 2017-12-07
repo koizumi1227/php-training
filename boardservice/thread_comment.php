@@ -10,7 +10,7 @@
     $thread_id = $_GET['id'];
     // var_dump($thread_id);
     $dbh = db_connect();
-    $sql = 'SELECT comments.*, users.name, threads.title AS thread_title
+    $sql = 'SELECT comments.*, users.name AS user_name, threads.title AS thread_title
             FROM comments
             JOIN users
             ON comments.user_id  = users.id
@@ -56,12 +56,12 @@
       <?php
        while($data = $pre->fetch(PDO::FETCH_ASSOC)){
         // echo"<pre>";
-       // var_dump($data);
+       var_dump($data);
          // h関数(htmlspecialchars)
       ?>
       <tr>
           <td><?php echo h($data['id'])?></td>
-          <td><?php echo h($data['name']) ?></td>
+          <td><?php echo h($data['user_name']) ?></td>
           <td><?php echo h($data['created_at']) ?></td>
           <td><?php echo h($data['updated_at']) ?></td>
           <td><?php echo h($data['title']) ?></td>
