@@ -21,32 +21,17 @@
     $pre->bindValue(':thread_id', $thread_id);
     $r = $pre->execute();
 
-
-    // スレッド内のコメント一覧
-      while($data = $pre->fetch(PDO::FETCH_ASSOC)){
-        $line .= "<tr>";
-        $line .= "<td>".h($data['id'])."</td>";
-        $line .= "<td>".h($data['name'])."</td>";
-        $line .= "<td>".h($data['created_at'])."</td>";
-        $line .= "<td>".h($data['updated_at'])."</td>";
-        $line .= "<td>".h($data['title'])."</td>";
-        $line .= "<td>".h($data['text'])."</td>";
-        $line .= "</tr>";
-      }
-
-      // スレッドタイトル取得
-        $pre->execute();
-        $thread = $pre->fetch(PDO::FETCH_ASSOC);
-        $thread_title = $thread['thread_title'];
-        // var_dump($thread_title);
+    // スレッドタイトル取得
+    $thread = $pre->fetch(PDO::FETCH_ASSOC);
+    $thread_title = $thread['thread_title'];
+      // var_dump($thread_title);
+    // while $dataのためカレントレコードを戻すため
+    $pre->execute();
 
   } catch (PDOException $e) {
       echo "エラーが発生。再度始めからやり直してください。 (" , $e->getMessage() , ")";
       return ;
   }
-
-
-
 
  ?>
 
@@ -68,7 +53,22 @@
         <th>タイトル</th>
         <th>コメント内容</th>
       </tr>
-        <?php echo $line ?>
+      <?php
+       while($data = $pre->fetch(PDO::FETCH_ASSOC)){
+        // echo"<pre>";
+       // var_dump($data);
+         // h関数(htmlspecialchars)
+      ?>
+      <tr>
+          <td><?php echo h($data['id'])?></td>
+          <td><?php echo h($data['name']) ?></td>
+          <td><?php echo h($data['created_at']) ?></td>
+          <td><?php echo h($data['updated_at']) ?></td>
+          <td><?php echo h($data['title']) ?></td>
+          <td><?php echo h($data['text']) ?></td>
+       </tr>
+   <?php } ?>
+
     </table>
   </body>
 </html>

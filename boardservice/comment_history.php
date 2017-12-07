@@ -10,7 +10,7 @@ try {
   // 該当するユーザーIDのコメント表示
   $user_id = $_SESSION['id'];
   $one_week_ago = date("Y-m-d H:i:s" , strtotime('-1week'));
-  var_dump($_SESSION);
+  // var_dump($_SESSION);
   $dbh = db_connect();
   $sql = 'SELECT *
           FROM comments
@@ -22,6 +22,7 @@ try {
   $pre->bindvalue(':cretimes', $one_week_ago);
   $pre->bindValue(':user_id', $user_id);
   $r = $pre->execute();
+
 
 } catch (PDOException $e) {
   echo "エラーが発生。再度始めからやり直してください。 (" , $e->getMessage() , ")";
@@ -50,21 +51,20 @@ try {
         <th>コメント内容</th>
       </tr>
       <?php
-        while($data = $pre->fetch(PDO::FETCH_ASSOC)){
-
-        ?>
+       while($data = $pre->fetch(PDO::FETCH_ASSOC)){
+      ?>
         <tr>
-          <td>
-            <?php echo "<a href=detail.php?id={$data['id']}>".$data['id']."</a>";?>
-          </td>
-          <td><?php echo h($_SESSION['name']) ?></td>
-          <td><?php echo h($data['created_at']) ?></td>
-          <td><?php echo h($data['updated_at']) ?></td>
-          <td><?php echo h($data['title']) ?></td>
-          <td><?php echo h($data['text']) ?></td>
-          <td>
-            <?php echo "<a href=delete_regi.php?id={$data['id']}>削除</a>";?>
-          </td>
+           <td>
+             <a href=detail.php?id=<?php echo $data['id'] ?> > <?php echo $data['id'] ?></a>
+           </td>
+           <td><?php echo h($_SESSION['name']) ?></td>
+           <td><?php echo h($data['created_at']) ?></td>
+           <td><?php echo h($data['updated_at']) ?></td>
+           <td><?php echo h($data['title']) ?></td>
+           <td><?php echo h($data['text']) ?></td>
+           <td>
+             <a href=delete_regi.php?id=<?php echo $data['id']?>>削除</a>
+           </td>
         </tr>
       <?php } ?>
   </body>
