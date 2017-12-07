@@ -56,7 +56,7 @@
       <?php
        while($data = $pre->fetch(PDO::FETCH_ASSOC)){
         // echo"<pre>";
-       var_dump($data);
+       // var_dump($data);
          // h関数(htmlspecialchars)
       ?>
       <tr>
