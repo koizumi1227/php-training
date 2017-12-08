@@ -32,6 +32,7 @@
   <head>
     <meta charset="utf-8">
     <title>ユーザーコメント一覧</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
     <a href="comment_history.php">コメント履歴</a>
   </head>
   <body>
@@ -66,6 +67,11 @@
       </tr>
     <?php } ?>
 
+    <div class="form_conf">
   </table>
+
+  <div class="form_conf">
+    <a href=index.php>トップページへ戻る</a>
+  </div>
   </body>
 </html>

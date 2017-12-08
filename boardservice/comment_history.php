@@ -58,6 +58,7 @@ try {
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
     <title>コメント履歴</title>
   </head>
   <body>
@@ -113,5 +114,9 @@ try {
            }
          ?>
     </table>
+
+    <div class="form_conf">
+      <a href=index.php>トップページへ戻る</a>
+    </div>
   </body>
 </html>

@@ -73,6 +73,7 @@
     </table>
     <div class="form_conf">
       <a href="comment_form.php?id=<?php echo $_GET['id'] ?>">コメント投稿</a>
+      <a href=index.php>トップページへ戻る</a>
     </div>
   </body>
 </html>
