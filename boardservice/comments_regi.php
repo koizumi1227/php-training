@@ -2,6 +2,7 @@
   require_once 'function.php';
   session_start();
   unlogined_session();
+  // var_dump($_POST);
 ?>
 
 <!DOCTYPE html>
@@ -16,9 +17,10 @@
     <p>名前 : <?php echo h($_SESSION['name'])?></p>
     <p>タイトル : <?php echo h($_POST['title'])?></p>
     <p>コメント内容 : <?php echo h($_POST['text'])?></p>
-    <input type="hidden" name="name" value="<?php echo h($_POST['name']) ?>">
+    <input type="hidden" name="name" value="<?php echo h($_SESSION['name']) ?>">
     <input type="hidden" name="title" value="<?php echo h($_POST['title'])?>">
     <input type="hidden" name="text" value="<?php echo h($_POST['text'])?>">
+    <input type="hidden" name="thread_id" value="<?php echo h($_POST['thread_id'])?>">
     <br>
     <p>上記を書き込みます</p>
       <button type="submit" name="action" value="accept">書込</button>
