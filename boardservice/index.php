@@ -59,6 +59,7 @@ try {
     <div class="form_conf">
       <a href="login.php">ログイン</a>
       <a href="user_regi_form.php">新規登録</a>
+      <a href="logout.php">ログアウト</a>
       <a href="user_comment_list.php">自分のコメント表示</a>
     </div>
 
