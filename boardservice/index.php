@@ -29,6 +29,11 @@ try {
   </head>
   <body>
     <h1>スレッド一覧</h1>
+    <form class="search" action="search_thread.php" method="post">
+      <label for="thread_search">スレッド名検索</label>
+      <input type="text" id="thread_search" name="thread_search" value="">
+      <input type="submit" name="submit" value="検索">
+    </form>
     <table border="1">
       <tr>
         <th>スレッド名</th>
@@ -53,8 +58,8 @@ try {
     <div class="form_conf">
       <a href="login.php">ログイン</a>
       <a href="user_regi_form.php">新規登録</a>
-      <a href="comment_form.php">コメント投稿</a>
       <a href="user_comment_list.php">自分のコメント表示</a>
     </div>
+
   </body>
 </html>
