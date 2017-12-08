@@ -32,6 +32,7 @@
   <head>
     <meta charset="utf-8">
     <title>ユーザーコメント一覧</title>
+    <a href="comment_history.php">コメント履歴</a>
   </head>
   <body>
   <table border="1">

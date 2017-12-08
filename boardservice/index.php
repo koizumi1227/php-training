@@ -26,6 +26,7 @@ try {
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="css/index.css">
     <title>スレッド一覧</title>
+    <a href="comment_history.php">コメント履歴</a>
   </head>
   <body>
     <h1>スレッド一覧</h1>
