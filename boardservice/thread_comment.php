@@ -39,6 +39,7 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
     <title>コメント一覧</title>
     <a href="comment_history.php">コメント履歴</a>
   </head>
@@ -70,5 +71,8 @@
    <?php } ?>
 
     </table>
+    <div class="form_conf">
+      <a href="comment_form.php?id=<?php echo $_GET['id'] ?>">コメント投稿</a>
+    </div>
   </body>
 </html>
