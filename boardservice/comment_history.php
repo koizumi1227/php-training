@@ -12,6 +12,8 @@ try {
   $one_week_ago = date("Y-m-d H:i:s" , strtotime('-1week'));
   // var_dump($_SESSION);
   $dbh = db_connect();
+
+  // 全てのコメント履歴一覧取得用
   $sql = 'SELECT *
           FROM comments
           WHERE user_id = :user_id
@@ -23,6 +25,25 @@ try {
   $pre->bindValue(':user_id', $user_id);
   $r = $pre->execute();
 
+  // コメントしたスレッド一覧取得用
+  $sql2 = 'SELECT  distinct thread_id, threads.title AS tread_title
+          FROM comments
+          JOIN threads
+          ON comments.thread_id = threads.id
+          WHERE user_id = :user_id
+          AND (comments.updated_at > :uptimes OR comments.created_at > :cretimes)
+          ORDER BY thread_id ASC
+          -- GROUP BY thread_id
+          ';
+  $pre2 = $dbh -> prepare($sql2);
+  $pre2->bindvalue(':uptimes', $one_week_ago);
+  $pre2->bindvalue(':cretimes', $one_week_ago);
+  $pre2->bindValue(':user_id', $user_id);
+  $r = $pre2->execute();
+
+  // while($data2 = $pre2->fetch(PDO::FETCH_ASSOC)){
+  //   var_dump($data2);
+  // }
 
 } catch (PDOException $e) {
   echo "エラーが発生。再度始めからやり直してください。 (" , $e->getMessage() , ")";
@@ -67,5 +88,30 @@ try {
            </td>
         </tr>
       <?php } ?>
+    </table>
+    <br><br>
+
+    <h1>過去1週間にコメントしたスレッド</h1>
+    <table border="1">
+      <tr>
+        <th>ID</th>
+        <th>スレッド名</th>
+      </tr>
+      <?php
+       while($data = $pre2->fetch(PDO::FETCH_ASSOC)){
+         // echo"<pre>";
+        // var_dump($data);
+      ?>
+         <tr>
+           <td>
+             <a href='thread_comment.php?id=<?php echo $data['thread_id'] ?>'><?php echo h($data['thread_id']) ?></a>
+          </td>
+           <td><?php echo h($data['tread_title']) ?></td>
+         </tr>
+
+         <?php
+           }
+         ?>
+    </table>
   </body>
 </html>
