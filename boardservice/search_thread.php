@@ -17,25 +17,28 @@ if(empty($_POST['thread_search'])){
 
 try {
   $dbh = db_connect();
-  $sql = 'SELECT count(*) FROM threads WHERE title LIKE :title';
-  $pre = $dbh -> prepare($sql);
-  $pre->bindValue(':title', $thread_search,  PDO::PARAM_STR);
-  $r = $pre->execute();
-  $n = $pre->fetchColumn();
-  // var_dump($n);
 
-  // 検索ワードが一つでもかかればcount($n)が1以上になる
-  if($n >= 1){
-    $sql2 = 'SELECT * FROM threads WHERE title LIKE :title';
-    $pre = $dbh -> prepare($sql2);
-    $pre->bindValue(':title', $thread_search,  PDO::PARAM_STR);
-    $r = $pre->execute();
-  } else {
+  $sql2 = 'SELECT * FROM threads WHERE title LIKE :title';
+  $pre = $dbh -> prepare($sql2);
+  $pre->bindValue(':title', $thread_search,  PDO::PARAM_STR);
+  $pre->execute();
+
+  echo "<pre>";
+  $datas = $pre->fetchALL();
+  // var_dump($data);
+
+  if(empty($datas)){
     echo "該当するスレッドはありません<br>";
     echo "<a href='index.php'>スレッド一覧へ</a>";
     exit;
   }
-  
+
+  // $data = $pre->fetch(PDO::FETCH_ASSOC);
+  // var_dump($data);
+
+
+
+
 } catch (PDOException $e) {
     echo "エラーが発生。再度始めからやり直してください。 (" , $e->getMessage() , ")";
     return ;
@@ -57,13 +60,14 @@ try {
         <th>作成日時</th>
       </tr>
     <?php
-    while($data = $pre->fetch(PDO::FETCH_ASSOC)){
+    foreach ($datas as $row){
+      var_dump($row);
       ?>
       <tr>
         <td>
-          <a href='thread_comment.php?id=<?php echo $data['id'] ?>'><?php echo h($data['title']) ?></a>
+          <a href='thread_comment.php?id=<?php echo $row['id'] ?>'><?php echo h($row['title']) ?></a>
        </td>
-        <td><?php echo h($data['created_at']) ?></td>
+        <td><?php echo h($row['created_at']) ?></td>
       </tr>
 
       <?php
