@@ -23,11 +23,11 @@ try {
   $pre->bindValue(':title', $thread_search,  PDO::PARAM_STR);
   $pre->execute();
 
-  echo "<pre>";
-  $datas = $pre->fetchALL();
+  $data = $pre->fetchALL();
+  // echo "<pre>";
   // var_dump($data);
 
-  if(empty($datas)){
+  if(empty($data)){
     echo "該当するスレッドはありません<br>";
     echo "<a href='index.php'>スレッド一覧へ</a>";
     exit;
@@ -60,8 +60,8 @@ try {
         <th>作成日時</th>
       </tr>
     <?php
-    foreach ($datas as $row){
-      var_dump($row);
+    foreach ($data as $row){
+      // var_dump($row);
       ?>
       <tr>
         <td>
